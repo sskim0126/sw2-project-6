@@ -1,0 +1,92 @@
+import pickle
+
+dbfilename = 'test3_4.dat'
+
+
+def readScoreDB():
+    try:
+        fH = open(dbfilename, 'rb')
+    except FileNotFoundError as e:
+        print("New DB: ", dbfilename)
+        return []
+
+    scdb = []
+    try:
+        scdb = pickle.load(fH)
+    except:
+        print("Empty DB: ", dbfilename)
+    else:
+        print("Open DB: ", dbfilename)
+    fH.close()
+    return scdb
+
+
+# write the data into person db
+def writeScoreDB(scdb):
+    fH = open(dbfilename, 'wb')
+    pickle.dump(scdb, fH)
+    fH.close()
+
+
+def doScoreDB(scdb):
+    while (True):
+        inputstr = (input("Score DB > "))
+        if inputstr == "": continue
+        parse = inputstr.split(" ")
+        if parse[0] == 'add':
+            try:
+                record = {'Name': parse[1], 'Age': parse[2], 'Score': parse[3]}
+                scdb += [record]
+            except:
+                continue # add 명령어에서 parse[1] 혹은 parse[1],parse[2] 값을 주지않았을때의 프로그램 종료되는 예외처리함
+        elif parse[0] == 'del':
+            try:
+                for p in scdb:
+                    if p['Name'] == parse[1]:
+                        scdb.remove(p)
+                        if p in scdb:
+                            scdb.remove(p) #del명령어에서 같은이름,나이,점수를 2번 이상 입력하면 하나만 사라지는 예외처리함
+            except:
+                continue # del 명령어에서 parse[1] 값을 주지않았을때의 프로그램 종료되는 예외처리함
+        elif parse[0] == 'find': #find명령어 추가
+            try:
+                for p in scdb:
+                    if p['Name'] == parse[1]:
+                        print(p)
+            except:
+                continue # find 명령어에서 parse[1]값을 주지않았을때의 프로그램이 종료되는 예외처리함
+        elif parse[0] == 'inc': #inc명령어 추가
+            try:
+                for p in scdb:
+                    if p['Name'] == parse[1]:
+                        parse[2] = amount
+                        Score = int()
+                        amount = int()
+                        Score += amount
+                        print(p)
+            except:
+                continue # inc 명령어에서 parse값을 주지않거나 2개 이상으로 주었을때  프로그램이 종료되는 예외처리함
+
+        elif parse[0] == 'show':
+            try:
+                sortKey = 'Name' if len(parse) == 1 else parse[1]
+                showScoreDB(scdb, sortKey)
+            except:
+                continue # show 명령어에서 show 이외에 prase 값을 주면 프로그램이 종료되는 예외처리함
+        elif parse[0] == 'quit':
+            break
+
+        else:
+            print("Invalid command: " + parse[0])
+
+
+def showScoreDB(scdb, keyname):
+    for p in sorted(scdb, key=lambda person: person[keyname]):
+        for attr in sorted(p):
+            print(attr + "=" + p[attr], end=' ')
+        print()
+
+
+scoredb = readScoreDB()
+doScoreDB(scoredb)
+writeScoreDB(scoredb)
