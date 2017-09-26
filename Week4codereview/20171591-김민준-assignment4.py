@@ -44,6 +44,12 @@ while True:
         print("%dC%d = " %(n,r) , fac(n)//fac(n-r)//fac(r))
 
 #조합 재귀함수코드
+def Combination(n,r): 
+    if r == 0:
+        return 1
+    else:
+	decision = n / r
+        return decision * Combination(n-1, r-1)
 while True:
     n = input("Enter a number: ")
     r = input("Enter a number: ")
@@ -51,25 +57,16 @@ while True:
         n = int(n)
         r = int(r)
         if n < -1 or r < -1:
-            raise ValueError
-        elif n < r: #n >= r 이어야하는 예외처리
+            raise ValueError       
+	elif n < r: #n >= r 이어야하는 예외처리
             print("n은 r보다 반드시 크거나 같아야 합니다.")
             continue
     except ValueError:
         print("0이상의 정수만 입력해주세요")
         continue
-    except: #문자가 들어오는 경우 예외처리
-        continue
     else:
-        def Combination(n,r): 
-            if r == 0:
-                return 1
-            else:
-                decision = n / r
-                return decision * Combination(n-1, r-1)
         print("%dC%d = " %(n,r) , int(Combination(n,r)))
         break
-
 
 
 
