@@ -16,14 +16,20 @@ def iterfibo(n):
         return a[n]
 
 while True:
-    nbr = int(input("Enter a number: "))
-    if nbr == -1:
-        break
-    ts = time.time()
-    fibonumber = iterfibo(nbr)
-    ts = time.time() - ts
-    print("IterFibo(%d) = %d, time %.6f" %(nbr, fibonumber, ts))
-    ts = time.time()
-    fibonumber = fibo(nbr)
-    ts = time.time() - ts
-    print("Fibo(%d) = %d, time %.6f" %(nbr, fibonumber, ts))
+    try:
+        nbr = int(input("Enter a number: "))
+        if nbr == -1:
+            break
+        elif nbr < -1:
+            raise ValueError
+    except ValueError:
+        print("0이상의 정수만 입력하세요")
+    else:
+        ts = time.time()
+        fibonumber = iterfibo(nbr)
+        ts = time.time() - ts
+        print("IterFibo(%d) = %d, time %.6f" %(nbr, fibonumber, ts))
+        ts = time.time()
+        fibonumber = fibo(nbr)
+        ts = time.time() - ts
+        print("Fibo(%d) = %d, time %.6f" %(nbr, fibonumber, ts))
