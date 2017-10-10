@@ -11,25 +11,19 @@ def iterfibo(n):
         return n
     else:
         a = [0,1]
-        for i in range(n-1):
-            a.append(a[i] + a[i+1])
+        for i in range(2, n+1):
+            a.append(a[i-2] + a[i-1])
         return a[n]
 
 while True:
-    try:
-        nbr = int(input("Enter a number: "))
-        if nbr == -1:
-            break
-        elif nbr < -1:
-            raise ValueError
-    except ValueError:
-        print("0이상의 정수만 입력하세요")
-    else:
-        ts = time.time()
-        fibonumber = iterfibo(nbr)
-        ts = time.time() - ts
-        print("IterFibo(%d) = %d, time %.6f" %(nbr, fibonumber, ts))
-        ts = time.time()
-        fibonumber = fibo(nbr)
-        ts = time.time() - ts
-        print("Fibo(%d) = %d, time %.6f" %(nbr, fibonumber, ts))
+    nbr = int(input("Enter a number: "))
+    if nbr == -1:
+        break
+    ts = time.time()
+    fibonumber = iterfibo(nbr)
+    ts = time.time() - ts
+    print("IterFibo(%d) = %d, time %.6f" %(nbr, fibonumber, ts))
+    ts = time.time()
+    fibonumber = fibo(nbr)
+    ts = time.time() - ts
+   print("Fibo(%d) = %d, time %.6f" %(nbr, fibonumber, ts)
