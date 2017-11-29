@@ -17,15 +17,17 @@ class Guess:
     def guess(self, character):  # numTries는 +되야할 기능 추가!
         for i, x in enumerate(self.secretWord):  # 자료형을 입력으로받아 인덱스,값을 포함해 리턴.
             if character == x:  # x는 secreWord의 글자.
-                self.currentStatus = self.currentStatus[:i] + x + self.currentStatus[i+1:]
+               self.currentStatus = self.currentStatus[:i] + x + self.currentStatus[i+1:]
+        self.guessedChars += character
         if character not in self.secretWord:
             self.numTries += 1  # 실패한 회수 증가.
-            self.guessedChars += character  # 사용한 글자의 집합에 원소로 추가.
+            #self.guessedChars += character  # 사용한 글자의 집합에 원소로 추가.
         if self.currentStatus == self.secretWord:
             print(self.secretWord)
             return True
+        else:
+            return False
 
-        # if self.numTries == len(self.secretWord):
-        #     return False #실패하면 false리턴
+      
 
-#  구조적 문제점 : 무수히 많은 단어들을 리스트에
+
